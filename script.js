@@ -10,6 +10,15 @@ const textarea = document.querySelector(".prompt-box textarea");
 
 const planArea = document.querySelector(".plan-area");
 
+const topZone =
+    document.querySelector(".top-zone");
+
+const centerZone =
+    document.querySelector(".center-zone");
+
+const bottomZone =
+    document.querySelector(".bottom-zone");
+
 const summaryTable = document.querySelector(".summary-table");
 
 const plotWidthInput = document.querySelector("#plotWidth");
@@ -306,7 +315,11 @@ if (houseData.workspace) {
     // CLEAR OLD PLAN
     // ==========================================
 
-    planArea.innerHTML = "";
+    topZone.innerHTML = "";
+
+centerZone.innerHTML = "";
+
+bottomZone.innerHTML = "";
 
 
 
@@ -623,7 +636,28 @@ room.innerHTML = `
 `;
 
 
-        planArea.appendChild(room);
+        if (
+    layoutZones.top.includes(name)
+) {
+
+    topZone.appendChild(room);
+}
+
+
+else if (
+    layoutZones.center.includes(name)
+) {
+
+    centerZone.appendChild(room);
+}
+
+
+else if (
+    layoutZones.bottom.includes(name)
+) {
+
+    bottomZone.appendChild(room);
+}
 
 
 
