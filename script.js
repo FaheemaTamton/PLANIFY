@@ -616,8 +616,11 @@ if (totalArea > plotArea) {
 
         room.classList.add("room");
 
-       const relations =
-    roomRelationships[name];
+       const baseName =
+    name.split(" ")[0];
+
+const relations =
+    roomRelationships[baseName];
 
 room.innerHTML = `
     ${name}
