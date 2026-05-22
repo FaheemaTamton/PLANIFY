@@ -524,14 +524,24 @@ if (totalArea > plotArea) {
 
         room.classList.add("room");
 
+       const relations =
+    roomRelationships[name];
 
-        room.innerHTML = `
-            ${name}
+room.innerHTML = `
+    ${name}
 
-            <span>${size}</span>
+    <span>${size}</span>
 
-            <small>${area} sq ft</small>
-        `;
+    <small>${area} sq ft</small>
+
+    ${
+        relations
+        ?
+        `<p>Near: ${relations.join(", ")}</p>`
+        :
+        ""
+    }
+`;
 
 
         planArea.appendChild(room);
