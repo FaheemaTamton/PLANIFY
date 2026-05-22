@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Workspace | Planify AI</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- GOOGLE FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            PLANIFY AI
+        </div>
+
+        <a href="index.html" class="nav-btn">
+            Back Home
+        </a>
+
+    </nav>
+
+
+
+    <!-- WORKSPACE SECTION -->
+
+    <section class="workspace-section">
+
+        <div class="workspace-container">
+
+
+            <!-- LEFT SIDEBAR -->
+
+            <div class="sidebar">
+
+                <h2>
+                    Describe Your Dream Home
+                </h2>
+
+
+                <!-- PROMPT BOX -->
+
+                <div class="prompt-box">
+
+                <!-- PLOT SIZE -->
+
+<div class="plot-size-box">
+
+    <label>Plot Size</label>
+
+    <div class="plot-inputs">
+
+        <input type="number" placeholder="Width (ft)">
+
+        <input type="number" placeholder="Height (ft)">
+
+    </div>
+
+</div>
+
+                    <textarea placeholder="Example:
+
+I need a modern 3-bedroom house on a 40x60 plot with good ventilation, parking space, natural lighting, and a large balcony."></textarea>
+
+                </div>
+
+
+
+                <!-- GUIDED QUESTIONS -->
+
+                <div class="question-box">
+
+                    <h3>
+                        AI Guidance
+                    </h3>
+
+                    <p>✔ How many bedrooms would you like?</p>
+
+                    <p>✔ Do you need parking space?</p>
+
+                    <p>✔ Would you like natural lighting optimization?</p>
+
+                    <p>✔ Do you need a separate dining area?</p>
+
+                    <p>✔ Would you like more open outdoor space?</p>
+
+                    <p>✔ Do you prefer open or private spaces?</p>
+
+                    <p>✔ Do you want a balcony or workspace?</p>
+
+                </div>
+
+
+
+            <!-- OPTIONAL INPUTS -->
+
+<div class="optional-inputs">
+
+    <h3>
+        Additional Preferences
+    </h3>
+
+
+    <!-- STYLE -->
+
+    <label>Preferred House Style</label>
+
+    <select>
+
+        <option>Select Style</option>
+
+        <option>Modern</option>
+
+        <option>Minimalist</option>
+
+        <option>Luxury</option>
+
+        <option>Traditional</option>
+
+    </select>
+
+
+
+    <!-- LIGHTING -->
+
+    <label>Lighting Preference</label>
+
+    <select>
+
+        <option>Select Preference</option>
+
+        <option>More Natural Lighting</option>
+
+        <option>Balanced Lighting</option>
+
+        <option>Privacy Focused</option>
+
+    </select>
+
+
+
+    <!-- SPACE TYPE -->
+
+    <label>Space Preference</label>
+
+    <select>
+
+        <option>Select Layout Type</option>
+
+        <option>Open Layout</option>
+
+        <option>Private Rooms</option>
+
+        <option>Balanced Layout</option>
+
+    </select>
+
+</div>
+
+
+
+
+
+
+                <!-- BUTTON -->
+
+                <button class="workspace-btn">
+                    Generate Plan
+                </button>
+
+            </div>
+
+
+
+
+
+            <!-- RIGHT SIDE -->
+
+            <div class="workspace-output">
+
+
+                <!-- HEADER -->
+
+                <div class="output-header">
+
+                    <h1>
+                        AI Generated House Plan
+                    </h1>
+
+                    <p>
+                        Your intelligent architectural plan will appear here
+                    </p>
+
+                </div>
+
+
+
+                <!-- WHITE ARCHITECTURE CANVAS -->
+
+                <div class="architecture-sheet">
+
+
+                    <!-- PLAN AREA -->
+
+                    <div class="plan-area">
+
+                        <div class="room bedroom">
+
+                            BEDROOM
+
+                            <span>14ft × 16ft</span>
+
+                            <small>224 sq ft</small>
+
+                        </div>
+
+
+
+                        <div class="room hall">
+
+                            HALL
+
+                            <span>18ft × 20ft</span>
+
+                            <small>360 sq ft</small>
+
+                        </div>
+
+
+
+                        <div class="room kitchen">
+
+                            KITCHEN
+
+                            <span>10ft × 12ft</span>
+
+                            <small>120 sq ft</small>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- CALCULATION SUMMARY -->
+
+<div class="summary-section">
+
+    <h2>
+        Calculation Summary
+    </h2>
+
+
+    <table class="summary-table">
+
+        <tr>
+            <th>Room</th>
+            <th>Dimensions</th>
+            <th>Area</th>
+        </tr>
+
+
+        <tr>
+            <td>Bedroom</td>
+            <td>14ft × 16ft</td>
+            <td>224 sq ft</td>
+        </tr>
+
+
+        <tr>
+            <td>Hall</td>
+            <td>18ft × 20ft</td>
+            <td>360 sq ft</td>
+        </tr>
+
+
+        <tr>
+            <td>Kitchen</td>
+            <td>10ft × 12ft</td>
+            <td>120 sq ft</td>
+        </tr>
+
+
+        <tr>
+            <td>Bathroom</td>
+            <td>6ft × 8ft</td>
+            <td>48 sq ft</td>
+        </tr>
+    <tr class="total-row">
+
+    <td>
+        Total Plot Area
+    </td>
+
+    <td>
+        60ft × 40ft
+    </td>
+
+    <td>
+        2400 sq ft
+    </td>
+
+</tr>
+    </table>
+
+</div>
+
+
+
+                <!-- DOWNLOAD BUTTON -->
+
+                <button class="download-btn">
+                    Download Plan PDF
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
