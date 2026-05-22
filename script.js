@@ -4,323 +4,64 @@ console.log("PLANIFY AI LOADED");
 // ELEMENTS
 // ==========================================
 
-const generateBtn = document.querySelector(".workspace-btn");
+const generateBtn =
+    document.querySelector(".workspace-btn");
 
-const textarea = document.querySelector(".prompt-box textarea");
+const textarea =
+    document.querySelector(".prompt-box textarea");
 
-const planArea = document.querySelector(".plan-area");
+const floorplanSvg =
+    document.querySelector(".floorplan-svg");
 
-const topZone =
-    document.querySelector(".top-zone");
+const summaryTable =
+    document.querySelector(".summary-table");
 
-const centerZone =
-    document.querySelector(".center-zone");
+const plotWidthInput =
+    document.querySelector("#plotWidth");
 
-const bottomZone =
-    document.querySelector(".bottom-zone");
+const plotHeightInput =
+    document.querySelector("#plotHeight");
 
-const summaryTable = document.querySelector(".summary-table");
 
-const plotWidthInput = document.querySelector("#plotWidth");
 
-const plotHeightInput = document.querySelector("#plotHeight");
- 
+// ==========================================
+// GENERATE BUTTON
+// ==========================================
 
 generateBtn.addEventListener("click", () => {
 
     // ==========================================
-    // USER PROMPT
+    // USER INPUT
     // ==========================================
 
-    const prompt = textarea.value.toLowerCase();
-    const plotWidth = Number(plotWidthInput.value);
-    const plotHeight = Number(plotHeightInput.value);
-    const plotArea = plotWidth * plotHeight;
+    const prompt =
+        textarea.value.toLowerCase();
+
+    const plotWidth =
+        Number(plotWidthInput.value);
+
+    const plotHeight =
+        Number(plotHeightInput.value);
+
+    const plotArea =
+        plotWidth * plotHeight;
+
 
     if (!plotWidth || !plotHeight) {
 
-    alert("Please enter valid plot dimensions.");
+        alert(
+            "Please enter valid plot dimensions."
+        );
 
-    return;
-}
-
-
-
-    // ==========================================
-    // HOUSE DATA OBJECT
-    // ==========================================
-
-    const houseData = {
-
-        bathrooms: 1,
-        bedrooms: 1,
-        style: "modern",
-
-        balcony: false,
-        parking: false,
-        workspace: false,
-        garden: false,
-        dining: false,
-
-        lighting: false,
-        openLayout: false
-    };
-
-    // ==========================================
-// ROOM RELATIONSHIPS
-// ==========================================
-
-const roomRelationships = {
-
-    Kitchen: ["Dining", "Hall"],
-
-    Dining: ["Kitchen", "Hall"],
-
-    Bathroom: ["Bedroom"],
-
-    Balcony: ["Hall"],
-
-    Workspace: ["Bedroom"],
-
-    Hall: ["All Rooms"]
-};
-
-// ==========================================
-// LAYOUT ZONES
-// ==========================================
-
-const layoutZones = {
-
-    top: [],
-
-    center: [],
-
-    bottom: []
-};
-
-
-
-    // ==========================================
-    // BEDROOM DETECTION
-    // ==========================================
-
-    const bedroomMatch = prompt.match(/(\d+)\s*bedroom/);
-
-    if (bedroomMatch) {
-
-        houseData.bedrooms = parseInt(bedroomMatch[1]);
-    }
-
-    // ==========================================
-// BATHROOM DETECTION
-// ==========================================
-
-const bathroomMatch =
-    prompt.match(/(\d+)\s*bathroom/);
-
-if (bathroomMatch) {
-
-    houseData.bathrooms =
-        parseInt(bathroomMatch[1]);
-}
-
-
-
-    // ==========================================
-    // STYLE DETECTION
-    // ==========================================
-
-    if (prompt.includes("modern")) {
-
-        houseData.style = "modern";
-    }
-
-    else if (prompt.includes("luxury")) {
-
-        houseData.style = "luxury";
-    }
-
-    else if (prompt.includes("traditional")) {
-
-        houseData.style = "traditional";
-    }
-
-    else if (prompt.includes("minimal")) {
-
-        houseData.style = "minimalist";
+        return;
     }
 
 
-
     // ==========================================
-    // FEATURE DETECTION
-    // ==========================================
-
-    if (prompt.includes("balcony")) {
-
-        houseData.balcony = true;
-    }
-
-    if (prompt.includes("parking")) {
-
-        houseData.parking = true;
-    }
-
-    if (prompt.includes("workspace")) {
-
-        houseData.workspace = true;
-    }
-
-    if (prompt.includes("garden")) {
-
-        houseData.garden = true;
-    }
-
-    if (prompt.includes("dining")) {
-
-        houseData.dining = true;
-    }
-
-    if (
-        prompt.includes("natural lighting") ||
-        prompt.includes("sunlight")
-    ) {
-
-        houseData.lighting = true;
-    }
-
-    if (
-        prompt.includes("open layout") ||
-        prompt.includes("open space")
-    ) {
-
-        houseData.openLayout = true;
-    }
-
-// ==========================================
-// PRIORITY MULTIPLIERS
-// ==========================================
-
-let hallMultiplier = 1;
-
-let workspaceMultiplier = 1;
-
-let diningMultiplier = 1;
-
-
-
-    // ==========================================
-// ROOM PRIORITIES
-// ==========================================
-
-if (
-    houseData.style === "luxury"
-) {
-
-    hallMultiplier = 1.4;
-}
-
-
-if (
-    houseData.workspace
-) {
-
-    workspaceMultiplier = 1.5;
-}
-
-
-if (
-    houseData.dining
-) {
-
-    diningMultiplier = 1.3;
-}
-
-
-// ==========================================
-// ROOM POSITIONING
-// ==========================================
-
-// BEDROOMS → TOP
-
-for (
-    let i = 1;
-    i <= houseData.bedrooms;
-    i++
-) {
-
-    layoutZones.top.push(
-        `Bedroom ${i}`
-    );
-}
-
-
-// BATHROOMS → TOP
-
-for (
-    let i = 1;
-    i <= houseData.bathrooms;
-    i++
-) {
-
-    layoutZones.top.push(
-        `Bathroom ${i}`
-    );
-}
-
-
-// HALL → CENTER
-
-layoutZones.center.push("Hall");
-
-
-// KITCHEN → BOTTOM
-
-layoutZones.bottom.push("Kitchen");
-
-
-// DINING → BOTTOM
-
-if (houseData.dining) {
-
-    layoutZones.bottom.push("Dining");
-}
-
-
-// BALCONY → CENTER
-
-if (houseData.balcony) {
-
-    layoutZones.center.push("Balcony");
-}
-
-
-// WORKSPACE → TOP
-
-if (houseData.workspace) {
-
-    layoutZones.top.push("Workspace");
-}
-
-    // ==========================================
-    // SHOW EXTRACTED DATA
+    // CLEAR SVG
     // ==========================================
 
-    console.log(houseData);
-    console.log(roomRelationships);
-    console.log(layoutZones);
-
-
-    // ==========================================
-    // CLEAR OLD PLAN
-    // ==========================================
-
-    topZone.innerHTML = "";
-
-centerZone.innerHTML = "";
-
-bottomZone.innerHTML = "";
-
+    floorplanSvg.innerHTML = "";
 
 
     // ==========================================
@@ -336,180 +77,452 @@ bottomZone.innerHTML = "";
     `;
 
 
+    // ==========================================
+    // HOUSE DATA
+    // ==========================================
+
+    const houseData = {
+
+        bedrooms: 1,
+        bathrooms: 1,
+
+        balcony: false,
+        workspace: false,
+        dining: false,
+
+        style: "modern"
+    };
+
+
+    // ==========================================
+    // DETECT BEDROOMS
+    // ==========================================
+
+    const bedroomMatch =
+        prompt.match(/(\d+)\s*bedroom/);
+
+    if (bedroomMatch) {
+
+        houseData.bedrooms =
+            parseInt(bedroomMatch[1]);
+    }
+
+
+    // ==========================================
+    // DETECT BATHROOMS
+    // ==========================================
+
+    const bathroomMatch =
+        prompt.match(/(\d+)\s*bathroom/);
+
+    if (bathroomMatch) {
+
+        houseData.bathrooms =
+            parseInt(bathroomMatch[1]);
+    }
+
+
+    // ==========================================
+    // FEATURES
+    // ==========================================
+
+    if (prompt.includes("workspace")) {
+
+        houseData.workspace = true;
+    }
+
+    if (prompt.includes("balcony")) {
+
+        houseData.balcony = true;
+    }
+
+    if (prompt.includes("dining")) {
+
+        houseData.dining = true;
+    }
+
+    if (prompt.includes("luxury")) {
+
+        houseData.style = "luxury";
+    }
+
 
     // ==========================================
     // TOTAL AREA
     // ==========================================
 
     let totalArea = 0;
-    // ==========================================
-// ROOM SIZE VARIABLES
-// ==========================================
-
-let bedroomWidth = 12;
-let bedroomHeight = 14;
-
-let hallWidth = 16;
-let hallHeight = 18;
-
-let kitchenWidth = 10;
-let kitchenHeight = 12;
-
-let bathroomWidth = 6;
-let bathroomHeight = 8;
-
-
-
-// ==========================================
-// ADAPTIVE ROOM SCALING
-// ==========================================
-
-if (plotArea >= 4000) {
-
-    // LARGE HOUSE
-
-    bedroomWidth = 16;
-    bedroomHeight = 18;
-
-    hallWidth = 22;
-    hallHeight = 24;
-
-    kitchenWidth = 14;
-    kitchenHeight = 16;
-
-    bathroomWidth = 8;
-    bathroomHeight = 10;
-}
-
-
-else if (plotArea <= 1500) {
-
-    // SMALL HOUSE
-
-    bedroomWidth = 10;
-    bedroomHeight = 12;
-
-    hallWidth = 14;
-    hallHeight = 16;
-
-    kitchenWidth = 8;
-    kitchenHeight = 10;
-
-    bathroomWidth = 5;
-    bathroomHeight = 7;
-}
-
 
 
     // ==========================================
-    // CREATE BEDROOMS
+    // ROOM SIZES
     // ==========================================
 
-    for (let i = 1; i <= houseData.bedrooms; i++) {
+    let bedroomWidth = 12;
+    let bedroomHeight = 14;
 
-        const bedroomArea =
-    bedroomWidth * bedroomHeight;
+    let hallWidth = 16;
+    let hallHeight = 18;
 
-createRoom(
-    `Bedroom ${i}`,
-    `${bedroomWidth}ft × ${bedroomHeight}ft`,
-    bedroomArea
-);
+    let kitchenWidth = 10;
+    let kitchenHeight = 12;
+
+    let bathroomWidth = 6;
+    let bathroomHeight = 8;
+
+
+    // ==========================================
+    // ADAPTIVE SCALING
+    // ==========================================
+
+    if (plotArea >= 4000) {
+
+        bedroomWidth = 16;
+        bedroomHeight = 18;
+
+        hallWidth = 22;
+        hallHeight = 24;
+
+        kitchenWidth = 14;
+        kitchenHeight = 16;
+
+        bathroomWidth = 8;
+        bathroomHeight = 10;
+    }
+
+    else if (plotArea <= 1500) {
+
+        bedroomWidth = 10;
+        bedroomHeight = 12;
+
+        hallWidth = 14;
+        hallHeight = 16;
+
+        kitchenWidth = 8;
+        kitchenHeight = 10;
+
+        bathroomWidth = 5;
+        bathroomHeight = 7;
     }
 
 
+    // ==========================================
+    // LUXURY PRIORITY
+    // ==========================================
+
+    if (houseData.style === "luxury") {
+
+        hallWidth += 4;
+        hallHeight += 4;
+    }
+
 
     // ==========================================
-    // DEFAULT ROOMS
+    // SVG POSITION
     // ==========================================
 
-hallWidth =
-    Math.floor(
-        hallWidth * hallMultiplier
-    );
-
-hallHeight =
-    Math.floor(
-        hallHeight * hallMultiplier
-    );
-
-const hallArea =
-    hallWidth * hallHeight;
-
-createRoom(
-    "Hall",
-    `${hallWidth}ft × ${hallHeight}ft`,
-    hallArea
-);
-const kitchenArea =
-    kitchenWidth * kitchenHeight;
-
-createRoom(
-    "Kitchen",
-    `${kitchenWidth}ft × ${kitchenHeight}ft`,
-    kitchenArea
-);
-
-const bathroomArea =
-    bathroomWidth * bathroomHeight;
+    let currentX = 40;
+    let currentY = 40;
 
 
-for (
-    let i = 1;
-    i <= houseData.bathrooms;
-    i++
-) {
+    // ==========================================
+    // ROOM FUNCTION
+    // ==========================================
 
-    createRoom(
-        `Bathroom ${i}`,
-        `${bathroomWidth}ft × ${bathroomHeight}ft`,
-        bathroomArea
-    );
+    function createRoom(name, size, area) {
+
+        totalArea += area;
+
+        const svgNS =
+            "http://www.w3.org/2000/svg";
+
+
+        // RECTANGLE
+
+        const rect =
+            document.createElementNS(
+                svgNS,
+                "rect"
+            );
+
+        // ==========================================
+// INTELLIGENT ROOM POSITIONING
+// ==========================================
+
+let x = 60;
+
+let y = 60;
+
+
+// BEDROOMS
+
+if (name.includes("Bedroom")) {
+
+    x = 60;
+
+    y = 60 + (currentY * 0.8);
 }
 
 
+// BATHROOMS
+
+else if (name.includes("Bathroom")) {
+
+    x = 320;
+
+    y = 60 + (currentY * 0.8);
+}
+
+
+// HALL
+
+else if (name === "Hall") {
+
+    x = 580;
+
+    y = 220;
+}
+
+
+// KITCHEN
+
+else if (name === "Kitchen") {
+
+    x = 60;
+
+    y = 420;
+}
+
+
+// DINING
+
+else if (name === "Dining") {
+
+    x = 320;
+
+    y = 420;
+}
+
+
+// BALCONY
+
+else if (name === "Balcony") {
+
+    x = 580;
+
+    y = 420;
+}
+
+
+// WORKSPACE
+
+else if (name === "Workspace") {
+
+    x = 580;
+
+    y = 60;
+}
+
+
+rect.setAttribute("x", x);
+
+rect.setAttribute("y", y);
+
+        rect.setAttribute("width", 180);
+
+        rect.setAttribute("height", 120);
+
+        rect.setAttribute("fill", "#f8f6f2");
+
+        rect.setAttribute("stroke", "#111827");
+
+        rect.setAttribute("stroke-width", "3");
+
+
+        // ROOM NAME
+
+        const label =
+            document.createElementNS(
+                svgNS,
+                "text"
+            );
+
+        label.setAttribute(
+            "x",
+            currentX + 20
+        );
+
+        label.setAttribute(
+            "y",
+            currentY + 40
+        );
+
+        label.setAttribute(
+            "font-size",
+            "20"
+        );
+
+        label.setAttribute(
+            "font-weight",
+            "700"
+        );
+
+        label.textContent = name;
+
+
+        // ROOM SIZE
+
+        const dimensions =
+            document.createElementNS(
+                svgNS,
+                "text"
+            );
+
+        dimensions.setAttribute(
+            "x",
+            currentX + 20
+        );
+
+        dimensions.setAttribute(
+            "y",
+            currentY + 80
+        );
+
+        dimensions.setAttribute(
+            "font-size",
+            "16"
+        );
+
+        dimensions.textContent = size;
+
+
+        // APPEND
+
+        floorplanSvg.appendChild(rect);
+
+        floorplanSvg.appendChild(label);
+
+        floorplanSvg.appendChild(dimensions);
+
+
+        // TABLE
+
+        summaryTable.innerHTML += `
+            <tr>
+                <td>${name}</td>
+                <td>${size}</td>
+                <td>${area} sq ft</td>
+            </tr>
+        `;
+
+      // MOVE ROOM LEVEL
+
+      currentY += 160;
+        
+    }
+
 
     // ==========================================
-    // OPTIONAL FEATURES
+    // BEDROOMS
+    // ==========================================
+
+    for (
+        let i = 1;
+        i <= houseData.bedrooms;
+        i++
+    ) {
+
+        const area =
+            bedroomWidth * bedroomHeight;
+
+        createRoom(
+            `Bedroom ${i}`,
+            `${bedroomWidth}ft × ${bedroomHeight}ft`,
+            area
+        );
+    }
+
+
+    // ==========================================
+    // HALL
+    // ==========================================
+
+    const hallArea =
+        hallWidth * hallHeight;
+
+    createRoom(
+        "Hall",
+        `${hallWidth}ft × ${hallHeight}ft`,
+        hallArea
+    );
+
+
+    // ==========================================
+    // KITCHEN
+    // ==========================================
+
+    const kitchenArea =
+        kitchenWidth * kitchenHeight;
+
+    createRoom(
+        "Kitchen",
+        `${kitchenWidth}ft × ${kitchenHeight}ft`,
+        kitchenArea
+    );
+
+
+    // ==========================================
+    // BATHROOMS
+    // ==========================================
+
+    const bathroomArea =
+        bathroomWidth * bathroomHeight;
+
+    for (
+        let i = 1;
+        i <= houseData.bathrooms;
+        i++
+    ) {
+
+        createRoom(
+            `Bathroom ${i}`,
+            `${bathroomWidth}ft × ${bathroomHeight}ft`,
+            bathroomArea
+        );
+    }
+
+
+    // ==========================================
+    // WORKSPACE
     // ==========================================
 
     if (houseData.workspace) {
 
-        const workspaceWidth =
-    Math.floor(10 * workspaceMultiplier);
-
-const workspaceHeight =
-    Math.floor(10 * workspaceMultiplier);
-
-const workspaceArea =
-    workspaceWidth * workspaceHeight;
-
-createRoom(
-    "Workspace",
-    `${workspaceWidth}ft × ${workspaceHeight}ft`,
-    workspaceArea
-);
+        createRoom(
+            "Workspace",
+            "10ft × 10ft",
+            100
+        );
     }
 
+
+    // ==========================================
+    // DINING
+    // ==========================================
 
     if (houseData.dining) {
 
-        const diningWidth =
-    Math.floor(12 * diningMultiplier);
-
-const diningHeight =
-    Math.floor(14 * diningMultiplier);
-
-const diningArea =
-    diningWidth * diningHeight;
-
-createRoom(
-    "Dining",
-    `${diningWidth}ft × ${diningHeight}ft`,
-    diningArea
-);
+        createRoom(
+            "Dining",
+            "12ft × 14ft",
+            168
+        );
     }
 
+
+    // ==========================================
+    // BALCONY
+    // ==========================================
 
     if (houseData.balcony) {
 
@@ -521,24 +534,20 @@ createRoom(
     }
 
 
+    // ==========================================
+    // VALIDATION
+    // ==========================================
 
-// ==========================================
-// VALIDATE SPACE
-// ==========================================
-
-const remainingSpace =
-    plotArea - totalArea;
-
-
-if (totalArea > plotArea) {
-
-    alert(
-        "Rooms exceed available plot area!"
-    );
-}
+    const remainingSpace =
+        plotArea - totalArea;
 
 
+    if (totalArea > plotArea) {
 
+        alert(
+            "Rooms exceed available plot area!"
+        );
+    }
 
 
     // ==========================================
@@ -547,135 +556,36 @@ if (totalArea > plotArea) {
 
     summaryTable.innerHTML += `
 
-    <tr class="total-row">
+        <tr class="total-row">
 
-        <td>
-            Total Plot Area
-        </td>
+            <td>Total Plot Area</td>
 
-        <td>
-            ${plotWidth}ft × ${plotHeight}ft
-        </td>
+            <td>
+                ${plotWidth}ft × ${plotHeight}ft
+            </td>
 
-        <td>
-            ${plotArea} sq ft
-        </td>
+            <td>${plotArea} sq ft</td>
 
-    </tr>
+        </tr>
 
+        <tr class="total-row">
 
-    <tr class="total-row">
+            <td>Used Space</td>
 
-        <td>
-            Used Space
-        </td>
+            <td>-</td>
 
-        <td>
-            -
-        </td>
+            <td>${totalArea} sq ft</td>
 
-        <td>
-            ${totalArea} sq ft
-        </td>
+        </tr>
 
-    </tr>
+        <tr class="total-row">
 
+            <td>Remaining Space</td>
 
-    <tr class="total-row">
+            <td>-</td>
 
-        <td>
-            Remaining Space
-        </td>
+            <td>${remainingSpace} sq ft</td>
 
-        <td>
-            -
-        </td>
-
-        <td>
-            ${remainingSpace} sq ft
-        </td>
-
-    </tr>
-
-`;
-
-
-
-
-
-    // ==========================================
-    // ROOM FUNCTION
-    // ==========================================
-
-    function createRoom(name, size, area) {
-
-        totalArea += area;
-
-
-        const room = document.createElement("div");
-
-        room.classList.add("room");
-
-       const baseName =
-    name.split(" ")[0];
-
-const relations =
-    roomRelationships[baseName];
-
-room.innerHTML = `
-    ${name}
-
-    <span>${size}</span>
-
-    <small>${area} sq ft</small>
-
-    ${
-        relations
-        ?
-        `<p>Near: ${relations.join(", ")}</p>`
-        :
-        ""
-    }
-`;
-
-
-        if (
-    layoutZones.top.includes(name)
-) {
-
-    topZone.appendChild(room);
-}
-
-
-else if (
-    layoutZones.center.includes(name)
-) {
-
-    centerZone.appendChild(room);
-}
-
-
-else if (
-    layoutZones.bottom.includes(name)
-) {
-
-    bottomZone.appendChild(room);
-}
-
-
-
-        summaryTable.innerHTML += `
-            <tr>
-
-                <td>${name}</td>
-
-                <td>${size}</td>
-
-                <td>${area} sq ft</td>
-
-            </tr>
-        `;
-    }
-
+        </tr>
+    `;
 });
-
