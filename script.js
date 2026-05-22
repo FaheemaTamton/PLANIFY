@@ -76,6 +76,19 @@ const roomRelationships = {
     Hall: ["All Rooms"]
 };
 
+// ==========================================
+// LAYOUT ZONES
+// ==========================================
+
+const layoutZones = {
+
+    top: [],
+
+    center: [],
+
+    bottom: []
+};
+
 
 
     // ==========================================
@@ -215,12 +228,78 @@ if (
 }
 
 
+// ==========================================
+// ROOM POSITIONING
+// ==========================================
+
+// BEDROOMS → TOP
+
+for (
+    let i = 1;
+    i <= houseData.bedrooms;
+    i++
+) {
+
+    layoutZones.top.push(
+        `Bedroom ${i}`
+    );
+}
+
+
+// BATHROOMS → TOP
+
+for (
+    let i = 1;
+    i <= houseData.bathrooms;
+    i++
+) {
+
+    layoutZones.top.push(
+        `Bathroom ${i}`
+    );
+}
+
+
+// HALL → CENTER
+
+layoutZones.center.push("Hall");
+
+
+// KITCHEN → BOTTOM
+
+layoutZones.bottom.push("Kitchen");
+
+
+// DINING → BOTTOM
+
+if (houseData.dining) {
+
+    layoutZones.bottom.push("Dining");
+}
+
+
+// BALCONY → CENTER
+
+if (houseData.balcony) {
+
+    layoutZones.center.push("Balcony");
+}
+
+
+// WORKSPACE → TOP
+
+if (houseData.workspace) {
+
+    layoutZones.top.push("Workspace");
+}
+
     // ==========================================
     // SHOW EXTRACTED DATA
     // ==========================================
 
     console.log(houseData);
     console.log(roomRelationships);
+    console.log(layoutZones);
 
 
     // ==========================================
