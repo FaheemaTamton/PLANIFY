@@ -43,6 +43,7 @@ generateBtn.addEventListener("click", () => {
 
     const houseData = {
 
+        bathrooms: 1,
         bedrooms: 1,
         style: "modern",
 
@@ -56,6 +57,25 @@ generateBtn.addEventListener("click", () => {
         openLayout: false
     };
 
+    // ==========================================
+// ROOM RELATIONSHIPS
+// ==========================================
+
+const roomRelationships = {
+
+    Kitchen: ["Dining", "Hall"],
+
+    Dining: ["Kitchen", "Hall"],
+
+    Bathroom: ["Bedroom"],
+
+    Balcony: ["Hall"],
+
+    Workspace: ["Bedroom"],
+
+    Hall: ["All Rooms"]
+};
+
 
 
     // ==========================================
@@ -68,6 +88,19 @@ generateBtn.addEventListener("click", () => {
 
         houseData.bedrooms = parseInt(bedroomMatch[1]);
     }
+
+    // ==========================================
+// BATHROOM DETECTION
+// ==========================================
+
+const bathroomMatch =
+    prompt.match(/(\d+)\s*bathroom/);
+
+if (bathroomMatch) {
+
+    houseData.bathrooms =
+        parseInt(bathroomMatch[1]);
+}
 
 
 
@@ -142,6 +175,17 @@ generateBtn.addEventListener("click", () => {
         houseData.openLayout = true;
     }
 
+// ==========================================
+// PRIORITY MULTIPLIERS
+// ==========================================
+
+let hallMultiplier = 1;
+
+let workspaceMultiplier = 1;
+
+let diningMultiplier = 1;
+
+
 
     // ==========================================
 // ROOM PRIORITIES
@@ -176,7 +220,7 @@ if (
     // ==========================================
 
     console.log(houseData);
-
+    console.log(roomRelationships);
 
 
     // ==========================================
@@ -222,16 +266,6 @@ let kitchenHeight = 12;
 let bathroomWidth = 6;
 let bathroomHeight = 8;
 
-
-// ==========================================
-// PRIORITY MULTIPLIERS
-// ==========================================
-
-let hallMultiplier = 1;
-
-let workspaceMultiplier = 1;
-
-let diningMultiplier = 1;
 
 
 // ==========================================
@@ -327,11 +361,19 @@ createRoom(
 const bathroomArea =
     bathroomWidth * bathroomHeight;
 
-createRoom(
-    "Bathroom",
-    `${bathroomWidth}ft × ${bathroomHeight}ft`,
-    bathroomArea
-);
+
+for (
+    let i = 1;
+    i <= houseData.bathrooms;
+    i++
+) {
+
+    createRoom(
+        `Bathroom ${i}`,
+        `${bathroomWidth}ft × ${bathroomHeight}ft`,
+        bathroomArea
+    );
+}
 
 
 
