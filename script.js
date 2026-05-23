@@ -253,9 +253,9 @@ let x = 60;
 
 let y = 60;
 
-let roomWidth = plotWidth * 10;
+let roomWidth = 220;
 
-let roomHeight = plotHeight * 2;
+let roomHeight = 140;
 
 
 // BEDROOMS
@@ -277,7 +277,7 @@ else if (name.includes("Bathroom")) {
 
     y = 60 + (currentY * 0.9);
 
-    roomWidth = 520;
+    roomWidth = 140;
 }
 
 
@@ -290,7 +290,7 @@ else if (name === "Hall") {
 
     y = 360;
 
-    roomWidth = 360;
+    roomWidth = 520;
 }
 
 
@@ -302,6 +302,8 @@ else if (name === "Kitchen") {
     x = 60;
 
     y = 520;
+
+    roomWidth = 260;
 }
 
 
@@ -313,6 +315,8 @@ else if (name === "Dining") {
     x = 280;
 
     y = 520;
+
+    roomWidth = 260;
 }
 
 
