@@ -218,11 +218,14 @@ generateBtn.addEventListener("click", () => {
 
 
     // ==========================================
-    // SVG POSITION
-    // ==========================================
+// SMART POSITION TRACKERS
+// ==========================================
 
-    let currentX = 40;
-    let currentY = 40;
+let bedroomY = 60;
+
+let hallY = 0;
+
+let kitchenY = 0;
 
 
     // ==========================================
@@ -277,9 +280,7 @@ let roomHeight =
     130 * scaleFactor;
 
 
-// REALISTIC SPACING
 
-let hallwayGap = 20;
 
 
         // RECTANGLE
@@ -298,17 +299,18 @@ let hallwayGap = 20;
 
 if (name.includes("Bedroom")) {
 
-    x = 60;
+    x = 80;
 
-    y = 60 + (currentY * 1);
+    y = bedroomY;
 
-  roomWidth =
-    260 * scaleFactor;
+    roomWidth =
+        240 * scaleFactor;
 
-roomHeight =
-    150 * scaleFactor;
+    roomHeight =
+        140 * scaleFactor;
+
+    bedroomY += roomHeight - 10;
 }
-
 
 // ==========================================
 // BATHROOMS
@@ -317,15 +319,15 @@ roomHeight =
 
 else if (name.includes("Bathroom")) {
 
-    x = 340;
+    x = 300;
 
-y = 200;
+    y = bedroomY - 110;
 
-roomWidth =
-    120 * scaleFactor;
+    roomWidth =
+        110 * scaleFactor;
 
-roomHeight =
-    110 * scaleFactor;
+    roomHeight =
+        100 * scaleFactor;
 }
 
 
@@ -336,15 +338,17 @@ roomHeight =
 
 else if (name === "Hall") {
 
-    x = 60;
+    x = 80;
 
-    y = 420 + hallwayGap;
+    y = bedroomY + 10;
 
     roomWidth =
-    420 * scaleFactor;
+        380 * scaleFactor;
 
-roomHeight =
-    180 * scaleFactor;
+    roomHeight =
+        170 * scaleFactor;
+
+    hallY = y;
 }
 
 
@@ -355,15 +359,17 @@ roomHeight =
 
 else if (name === "Kitchen") {
 
-    x = 60;
+    x = 80;
 
-    y = 620 + hallwayGap;
+    y = hallY + roomHeight - 10;
 
     roomWidth =
-    240 * scaleFactor;
+        200 * scaleFactor;
 
-roomHeight =
-    140 * scaleFactor;
+    roomHeight =
+        120 * scaleFactor;
+
+    kitchenY = y;
 }
 
 
@@ -374,16 +380,17 @@ roomHeight =
 
 else if (name === "Dining") {
 
-    x = 410;
+    x = 290;
 
-    y = 620 + hallwayGap;
-roomWidth =
-    240 * scaleFactor;
+    y = kitchenY;
 
-roomHeight =
-    140 * scaleFactor;
+    roomWidth =
+        200 * scaleFactor;
+
+    roomHeight =
+        120 * scaleFactor;
+}      
 }
-
 
 // ==========================================
 // BALCONY
@@ -391,15 +398,17 @@ roomHeight =
 
 else if (name === "Balcony") {
 
-    x = 680;
+    x =
+        470 * scaleFactor;
 
-    y = 380;
+    y =
+        hallY + 30;
 
     roomWidth =
-    160 * scaleFactor;
+        140 * scaleFactor;
 
-roomHeight =
-    120 * scaleFactor;
+    roomHeight =
+        110 * scaleFactor;
 }
 
 
@@ -787,27 +796,21 @@ floorplanSvg.appendChild(windowLine);
 
         floorplanSvg.appendChild(dimensions);
 
-
         // TABLE
 
-        summaryTable.innerHTML += `
-            <tr>
-                <td>${name}</td>
-                <td>${size}</td>
-                <td>${area} sq ft</td>
-            </tr>
-        `;
-
-      // MOVE ROOM LEVEL
-   if (
-    name.includes("Bedroom") ||
-    name.includes("Bathroom")
-) {
-
-    currentY += roomHeight + 20;
+summaryTable.innerHTML += `
+    <tr>
+        <td>${name}</td>
+        <td>${size}</td>
+        <td>${area} sq ft</td>
+    </tr>
+`;
 }
+
+
+
         
-    }
+    
 
 
     // ==========================================
