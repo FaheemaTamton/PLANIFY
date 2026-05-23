@@ -253,9 +253,9 @@ let x = 60;
 
 let y = 60;
 
-let roomWidth = 220;
+let roomWidth = plotWidth * 10;
 
-let roomHeight = 140;
+let roomHeight = plotHeight * 2;
 
 
 // BEDROOMS
@@ -277,7 +277,7 @@ else if (name.includes("Bathroom")) {
 
     y = 60 + (currentY * 0.9);
 
-    roomWidth = 140;
+    roomWidth = 520;
 }
 
 
@@ -321,7 +321,7 @@ else if (name === "Dining") {
 
 else if (name === "Balcony") {
 
-    x = 430;
+    x = 600;
 
     y = 360;
 
@@ -368,15 +368,15 @@ rect.setAttribute(
                 "text"
             );
 
-        label.setAttribute(
-            "x",
-            currentX + 20
-        );
+       label.setAttribute(
+    "x",
+    x + 20
+);
 
-        label.setAttribute(
-            "y",
-            currentY + 40
-        );
+label.setAttribute(
+    "y",
+    y + 40
+);
 
         label.setAttribute(
             "font-size",
@@ -400,14 +400,14 @@ rect.setAttribute(
             );
 
         dimensions.setAttribute(
-            "x",
-            currentX + 20
-        );
+    "x",
+    x + 20
+);
 
-        dimensions.setAttribute(
-            "y",
-            currentY + 80
-        );
+dimensions.setAttribute(
+    "y",
+    y + 80
+);
 
         dimensions.setAttribute(
             "font-size",
