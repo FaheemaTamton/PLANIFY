@@ -245,13 +245,17 @@ generateBtn.addEventListener("click", () => {
                 "rect"
             );
 
-        // ==========================================
-// INTELLIGENT ROOM POSITIONING
+            // ==========================================
+// CONNECTED GEOMETRY ENGINE
 // ==========================================
 
 let x = 60;
 
 let y = 60;
+
+let roomWidth = 220;
+
+let roomHeight = 140;
 
 
 // BEDROOMS
@@ -260,57 +264,68 @@ if (name.includes("Bedroom")) {
 
     x = 60;
 
-    y = 60 + (currentY * 0.8);
+    y = 60 + (currentY * 0.9);
 }
 
 
 // BATHROOMS
+// CONNECT TO BEDROOMS
 
 else if (name.includes("Bathroom")) {
 
-    x = 320;
+    x = 280;
 
-    y = 60 + (currentY * 0.8);
+    y = 60 + (currentY * 0.9);
+
+    roomWidth = 140;
 }
 
 
 // HALL
+// CONNECT BELOW BEDROOMS
 
 else if (name === "Hall") {
 
-    x = 580;
+    x = 60;
 
-    y = 220;
+    y = 360;
+
+    roomWidth = 360;
 }
 
 
 // KITCHEN
+// CONNECT BELOW HALL
 
 else if (name === "Kitchen") {
 
     x = 60;
 
-    y = 420;
+    y = 520;
 }
 
 
 // DINING
+// CONNECT BESIDE KITCHEN
 
 else if (name === "Dining") {
 
-    x = 320;
+    x = 280;
 
-    y = 420;
+    y = 520;
 }
 
 
 // BALCONY
+// CONNECT TO HALL
 
 else if (name === "Balcony") {
 
-    x = 580;
+    x = 430;
 
-    y = 420;
+    y = 360;
+
+    roomWidth = 160;
 }
 
 
@@ -318,7 +333,7 @@ else if (name === "Balcony") {
 
 else if (name === "Workspace") {
 
-    x = 580;
+    x = 430;
 
     y = 60;
 }
@@ -328,9 +343,15 @@ rect.setAttribute("x", x);
 
 rect.setAttribute("y", y);
 
-        rect.setAttribute("width", 180);
+       rect.setAttribute(
+    "width",
+    roomWidth
+);
 
-        rect.setAttribute("height", 120);
+rect.setAttribute(
+    "height",
+    roomHeight
+);
 
         rect.setAttribute("fill", "#f8f6f2");
 
@@ -416,8 +437,13 @@ rect.setAttribute("y", y);
         `;
 
       // MOVE ROOM LEVEL
+   if (
+    name.includes("Bedroom") ||
+    name.includes("Bathroom")
+) {
 
-      currentY += 160;
+    currentY += 120;
+}
         
     }
 
