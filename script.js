@@ -245,101 +245,121 @@ generateBtn.addEventListener("click", () => {
                 "rect"
             );
 
-            // ==========================================
-// CONNECTED GEOMETRY ENGINE
+  // ==========================================
+// CIRCULATION & HALLWAY LOGIC
 // ==========================================
 
 let x = 60;
 
 let y = 60;
 
-let roomWidth = 220;
+let roomWidth = 260;
 
-let roomHeight = 140;
+let roomHeight = 160;
 
 
+// HALLWAY GAP
+
+let hallwayGap = 40;
+
+
+// ==========================================
 // BEDROOMS
+// ==========================================
 
 if (name.includes("Bedroom")) {
 
     x = 60;
 
-    y = 60 + (currentY * 0.9);
+    y = 60 + (currentY * 1);
+
+    roomWidth = 320;
+
+    roomHeight = 160;
 }
 
 
+// ==========================================
 // BATHROOMS
-// CONNECT TO BEDROOMS
+// SHARES RIGHT WALL
+// ==========================================
 
 else if (name.includes("Bathroom")) {
 
-    x = 280;
+    x = 380;
 
-    y = 60 + (currentY * 0.9);
+    y = 240;
 
-    roomWidth = 140;
+    roomWidth = 160;
+
+    roomHeight = 160;
 }
 
 
+// ==========================================
 // HALL
-// CONNECT BELOW BEDROOMS
+// CONNECTED BELOW
+// ==========================================
 
 else if (name === "Hall") {
 
     x = 60;
 
-    y = 360;
+    y = 420 + hallwayGap;
 
-    roomWidth = 520;
+    roomWidth = 700;
+
+    roomHeight = 160;
 }
 
 
+// ==========================================
 // KITCHEN
-// CONNECT BELOW HALL
+// LEFT BOTTOM
+// ==========================================
 
 else if (name === "Kitchen") {
 
     x = 60;
 
-    y = 520;
+    y = 640 + hallwayGap;
 
-    roomWidth = 260;
+    roomWidth = 350;
+
+    roomHeight = 180;
 }
 
 
+// ==========================================
 // DINING
-// CONNECT BESIDE KITCHEN
+// SHARES WALL WITH KITCHEN
+// ==========================================
 
 else if (name === "Dining") {
 
-    x = 280;
+    x = 410;
 
-    y = 520;
+    y = 640 + hallwayGap;
 
-    roomWidth = 260;
+    roomWidth = 350;
+
+    roomHeight = 180;
 }
 
 
+// ==========================================
 // BALCONY
-// CONNECT TO HALL
+// ==========================================
 
 else if (name === "Balcony") {
 
-    x = 600;
+    x = 760;
 
-    y = 360;
+    y = 380;
 
-    roomWidth = 160;
-}
+    roomWidth = 180;
 
-
-// WORKSPACE
-
-else if (name === "Workspace") {
-
-    x = 430;
-
-    y = 60;
+    roomHeight = 180;
 }
 
 
@@ -361,7 +381,7 @@ rect.setAttribute(
 
         rect.setAttribute("stroke", "#111827");
 
-        rect.setAttribute("stroke-width", "3");
+        rect.setAttribute("stroke-width", "2");
 
 
         // ROOM NAME
@@ -384,7 +404,7 @@ label.setAttribute(
 
         label.setAttribute(
             "font-size",
-            "20"
+            "14"
         );
 
         label.setAttribute(

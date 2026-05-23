@@ -746,63 +746,16 @@ body {
 
     padding: 30px;
 
-    display: grid;
+display: flex;
 
-    grid-template-columns: repeat(2, 1fr);
+justify-content: center;
 
-    gap: 30px;
+align-items: flex-start;
 
-    align-items: start;
+    overflow: auto;
 }
 
 
-
-/* ROOM */
-
-.room {
-
-    width: 220px;
-    height: 160px;
-
-    border: 2px solid #0F172A;
-
-    border-radius: 14px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 22px;
-    font-weight: 600;
-
-    text-align: center;
-}
-
-/* LARGE ROOM */
-
-.large-room {
-
-    grid-column: span 2;
-}
-
-
-.room span {
-
-    margin-top: 12px;
-
-    font-size: 16px;
-}
-
-
-.room small {
-
-    margin-top: 8px;
-
-    color: #475569;
-
-    font-size: 14px;
-}
 
 
 
