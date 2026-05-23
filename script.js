@@ -236,6 +236,23 @@ generateBtn.addEventListener("click", () => {
         const svgNS =
             "http://www.w3.org/2000/svg";
 
+            // ==========================================
+// REALISTIC FLOORPLAN REFINEMENT
+// ==========================================
+
+let x = 60;
+
+let y = 60;
+
+let roomWidth = 240;
+
+let roomHeight = 140;
+
+
+// REALISTIC SPACING
+
+let hallwayGap = 20;
+
 
         // RECTANGLE
 
@@ -245,22 +262,6 @@ generateBtn.addEventListener("click", () => {
                 "rect"
             );
 
-  // ==========================================
-// CIRCULATION & HALLWAY LOGIC
-// ==========================================
-
-let x = 60;
-
-let y = 60;
-
-let roomWidth = 260;
-
-let roomHeight = 160;
-
-
-// HALLWAY GAP
-
-let hallwayGap = 40;
 
 
 // ==========================================
@@ -273,9 +274,9 @@ if (name.includes("Bedroom")) {
 
     y = 60 + (currentY * 1);
 
-    roomWidth = 320;
+    roomWidth = 280;
 
-    roomHeight = 160;
+    roomHeight = 120;
 }
 
 
@@ -286,13 +287,13 @@ if (name.includes("Bedroom")) {
 
 else if (name.includes("Bathroom")) {
 
-    x = 380;
+    x = 340;
 
-    y = 240;
+y = 200;
 
-    roomWidth = 160;
+roomWidth = 140;
 
-    roomHeight = 160;
+roomHeight = 120;
 }
 
 
@@ -307,9 +308,9 @@ else if (name === "Hall") {
 
     y = 420 + hallwayGap;
 
-    roomWidth = 700;
+    roomWidth = 620;
 
-    roomHeight = 160;
+    roomHeight = 140;
 }
 
 
@@ -324,9 +325,9 @@ else if (name === "Kitchen") {
 
     y = 640 + hallwayGap;
 
-    roomWidth = 350;
+    roomWidth = 300;
 
-    roomHeight = 180;
+    roomHeight = 140;
 }
 
 
@@ -341,9 +342,9 @@ else if (name === "Dining") {
 
     y = 640 + hallwayGap;
 
-    roomWidth = 350;
+    roomWidth = 300;
 
-    roomHeight = 180;
+    roomHeight = 140;
 }
 
 
@@ -353,7 +354,7 @@ else if (name === "Dining") {
 
 else if (name === "Balcony") {
 
-    x = 760;
+    x = 680;
 
     y = 380;
 
@@ -404,7 +405,7 @@ label.setAttribute(
 
         label.setAttribute(
             "font-size",
-            "14"
+            "12"
         );
 
         label.setAttribute(
@@ -413,6 +414,7 @@ label.setAttribute(
         );
 
         label.textContent = name;
+
 
 
         // ROOM SIZE
@@ -435,7 +437,7 @@ dimensions.setAttribute(
 
         dimensions.setAttribute(
             "font-size",
-            "16"
+            "13"
         );
 
         dimensions.textContent = size;
@@ -444,6 +446,303 @@ dimensions.setAttribute(
         // APPEND
 
         floorplanSvg.appendChild(rect);
+
+        // ==========================================
+// DOOR SYSTEM
+// ==========================================
+
+const door =
+    document.createElementNS(
+        svgNS,
+        "line"
+    );
+
+
+// BEDROOM DOOR
+
+if (name.includes("Bedroom")) {
+
+    door.setAttribute(
+        "x1",
+        x + roomWidth - 40
+    );
+
+    door.setAttribute(
+        "y1",
+        y + roomHeight
+    );
+
+    door.setAttribute(
+        "x2",
+        x + roomWidth - 10
+    );
+
+    door.setAttribute(
+        "y2",
+        y + roomHeight
+    );
+}
+
+
+// BATHROOM DOOR
+
+else if (name.includes("Bathroom")) {
+
+    door.setAttribute(
+        "x1",
+        x
+    );
+
+    door.setAttribute(
+        "y1",
+        y + 40
+    );
+
+    door.setAttribute(
+        "x2",
+        x
+    );
+
+    door.setAttribute(
+        "y2",
+        y + 80
+    );
+}
+
+
+// HALL OPENING
+
+else if (name === "Hall") {
+
+    door.setAttribute(
+        "x1",
+        x + 260
+    );
+
+    door.setAttribute(
+        "y1",
+        y
+    );
+
+    door.setAttribute(
+        "x2",
+        x + 340
+    );
+
+    door.setAttribute(
+        "y2",
+        y
+    );
+}
+
+
+// KITCHEN DOOR
+
+else if (name === "Kitchen") {
+
+    door.setAttribute(
+        "x1",
+        x + roomWidth
+    );
+
+    door.setAttribute(
+        "y1",
+        y + 60
+    );
+
+    door.setAttribute(
+        "x2",
+        x + roomWidth
+    );
+
+    door.setAttribute(
+        "y2",
+        y + 100
+    );
+}
+
+
+// DINING OPENING
+
+else if (name === "Dining") {
+
+    door.setAttribute(
+        "x1",
+        x
+    );
+
+    door.setAttribute(
+        "y1",
+        y + 50
+    );
+
+    door.setAttribute(
+        "x2",
+        x
+    );
+
+    door.setAttribute(
+        "y2",
+        y + 90
+    );
+    
+}
+
+
+// DOOR STYLE
+
+door.setAttribute(
+    "stroke",
+    "#2563EB"
+);
+
+door.setAttribute(
+    "stroke-width",
+    "4"
+);
+
+door.setAttribute(
+    "stroke-linecap",
+    "round"
+);
+
+
+floorplanSvg.appendChild(door);
+
+// ==========================================
+// WINDOW SYSTEM
+// ==========================================
+
+const windowLine =
+    document.createElementNS(
+        svgNS,
+        "line"
+    );
+
+
+// BEDROOM WINDOWS
+
+if (name.includes("Bedroom")) {
+
+    windowLine.setAttribute(
+        "x1",
+        x + 80
+    );
+
+    windowLine.setAttribute(
+        "y1",
+        y
+    );
+
+    windowLine.setAttribute(
+        "x2",
+        x + 180
+    );
+
+    windowLine.setAttribute(
+        "y2",
+        y
+    );
+}
+
+
+// HALL WINDOWS
+
+else if (name === "Hall") {
+
+    windowLine.setAttribute(
+        "x1",
+        x + 500
+    );
+
+    windowLine.setAttribute(
+        "y1",
+        y + roomHeight
+    );
+
+    windowLine.setAttribute(
+        "x2",
+        x + 580
+    );
+
+    windowLine.setAttribute(
+        "y2",
+        y + roomHeight
+    );
+}
+
+
+// KITCHEN WINDOW
+
+else if (name === "Kitchen") {
+
+    windowLine.setAttribute(
+        "x1",
+        x
+    );
+
+    windowLine.setAttribute(
+        "y1",
+        y + 50
+    );
+
+    windowLine.setAttribute(
+        "x2",
+        x
+    );
+
+    windowLine.setAttribute(
+        "y2",
+        y + 100
+    );
+}
+
+
+// DINING WINDOW
+
+else if (name === "Dining") {
+
+    windowLine.setAttribute(
+        "x1",
+        x + roomWidth
+    );
+
+    windowLine.setAttribute(
+        "y1",
+        y + 40
+    );
+
+    windowLine.setAttribute(
+        "x2",
+        x + roomWidth
+    );
+
+    windowLine.setAttribute(
+        "y2",
+        y + 90
+    );
+}
+
+
+// WINDOW STYLE
+
+windowLine.setAttribute(
+    "stroke",
+    "#06B6D4"
+);
+
+windowLine.setAttribute(
+    "stroke-width",
+    "5"
+);
+
+windowLine.setAttribute(
+    "stroke-linecap",
+    "round"
+);
+
+
+floorplanSvg.appendChild(windowLine);
 
         floorplanSvg.appendChild(label);
 
