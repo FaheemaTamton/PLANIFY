@@ -244,9 +244,37 @@ let x = 60;
 
 let y = 60;
 
-let roomWidth = 240;
+// ==========================================
+// DYNAMIC ADAPTIVE SCALING
+// ==========================================
 
-let roomHeight = 140;
+const plotWidth =
+    Number(
+        document.getElementById("plotWidth").value
+    ) || 40;
+
+const plotHeight =
+    Number(
+        document.getElementById("plotHeight").value
+    ) || 60;
+
+
+// SCALE FACTOR
+
+const scaleFactor =
+    Math.min(
+        plotWidth,
+        plotHeight
+    ) / 40;
+
+
+// DEFAULT ROOM SIZE
+
+let roomWidth =
+    220 * scaleFactor;
+
+let roomHeight =
+    130 * scaleFactor;
 
 
 // REALISTIC SPACING
@@ -274,9 +302,11 @@ if (name.includes("Bedroom")) {
 
     y = 60 + (currentY * 1);
 
-    roomWidth = 280;
+  roomWidth =
+    260 * scaleFactor;
 
-    roomHeight = 120;
+roomHeight =
+    150 * scaleFactor;
 }
 
 
@@ -291,9 +321,11 @@ else if (name.includes("Bathroom")) {
 
 y = 200;
 
-roomWidth = 140;
+roomWidth =
+    120 * scaleFactor;
 
-roomHeight = 120;
+roomHeight =
+    110 * scaleFactor;
 }
 
 
@@ -308,9 +340,11 @@ else if (name === "Hall") {
 
     y = 420 + hallwayGap;
 
-    roomWidth = 620;
+    roomWidth =
+    420 * scaleFactor;
 
-    roomHeight = 140;
+roomHeight =
+    180 * scaleFactor;
 }
 
 
@@ -323,11 +357,13 @@ else if (name === "Kitchen") {
 
     x = 60;
 
-    y = 640 + hallwayGap;
+    y = 620 + hallwayGap;
 
-    roomWidth = 300;
+    roomWidth =
+    240 * scaleFactor;
 
-    roomHeight = 140;
+roomHeight =
+    140 * scaleFactor;
 }
 
 
@@ -340,11 +376,12 @@ else if (name === "Dining") {
 
     x = 410;
 
-    y = 640 + hallwayGap;
+    y = 620 + hallwayGap;
+roomWidth =
+    240 * scaleFactor;
 
-    roomWidth = 300;
-
-    roomHeight = 140;
+roomHeight =
+    140 * scaleFactor;
 }
 
 
@@ -358,9 +395,11 @@ else if (name === "Balcony") {
 
     y = 380;
 
-    roomWidth = 180;
+    roomWidth =
+    160 * scaleFactor;
 
-    roomHeight = 180;
+roomHeight =
+    120 * scaleFactor;
 }
 
 
@@ -765,7 +804,7 @@ floorplanSvg.appendChild(windowLine);
     name.includes("Bathroom")
 ) {
 
-    currentY += 120;
+    currentY += roomHeight + 20;
 }
         
     }
