@@ -382,6 +382,7 @@ else if (name === "Dining") {
 
     x = 290;
 
+
     y = kitchenY;
 
     roomWidth =
@@ -390,7 +391,7 @@ else if (name === "Dining") {
     roomHeight =
         120 * scaleFactor;
 }      
-}
+
 
 // ==========================================
 // BALCONY
