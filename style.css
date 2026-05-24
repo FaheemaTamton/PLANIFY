@@ -723,6 +723,13 @@ body {
 
     width: 100%;
 
+    background-image:
+linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
+linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px);
+
+background-size: 40px 40px;
+
+
     min-height: 900px;
 
     background: white;

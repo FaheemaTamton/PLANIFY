@@ -63,6 +63,60 @@ generateBtn.addEventListener("click", () => {
 
     floorplanSvg.innerHTML = "";
 
+    // ==========================================
+// OUTER BLUEPRINT BORDER
+// ==========================================
+
+const border =
+    document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "rect"
+    );
+
+border.setAttribute("x", "60");
+
+border.setAttribute("y", "60");
+
+border.setAttribute("width", "1220");
+
+border.setAttribute("height", "980");
+
+border.setAttribute("fill", "none");
+
+border.setAttribute("stroke", "#cbd5e1");
+
+border.setAttribute("stroke-width", "3");
+
+border.setAttribute("stroke-dasharray", "10 8");
+
+floorplanSvg.appendChild(border);
+
+
+// ==========================================
+// BLUEPRINT TITLE
+// ==========================================
+
+const title =
+    document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "text"
+    );
+
+title.setAttribute("x", "90");
+
+title.setAttribute("y", "40");
+
+title.setAttribute("fill", "#1e293b");
+
+title.setAttribute("font-size", "28");
+
+title.setAttribute("font-weight", "700");
+
+title.textContent =
+    "PLANIFY AI — FLOOR PLAN";
+
+floorplanSvg.appendChild(title);
+
 
     // ==========================================
     // CLEAR TABLE
@@ -364,31 +418,82 @@ else if (name === "Balcony") {
 }
 
 
-// GRID POSITIONING
+// ==========================================
+// SMART ROOM POSITIONING
+// ==========================================
 
-x =
-    gridX +
-    currentColumn *
-    (260 * scaleFactor);
+// BEDROOMS
 
-y =
-    gridY +
-    currentRow *
-    (170 * scaleFactor);
+if (name === "Bedroom 1") {
+
+    x = 180;
+    y = 140;
+}
+
+else if (name === "Bedroom 2") {
+
+    x = 520;
+    y = 140;
+}
+
+else if (name === "Bedroom 3") {
+
+    x = 180;
+    y = 360;
+}
 
 
-// MOVE GRID
+// HALL
 
-currentColumn++;
+else if (name === "Hall") {
+
+    x = 180;
+    y = 360;
+
+    roomWidth = 520;
+    roomHeight = 220;
+}
 
 
-// NEXT ROW
+// KITCHEN
 
-if (currentColumn >= maxColumns) {
+else if (name === "Kitchen") {
 
-    currentColumn = 0;
+    x = 760;
+    y = 360;
+}
 
-    currentRow++;
+
+// DINING
+
+else if (name === "Dining") {
+
+    x = 760;
+    y = 560;
+}
+
+
+// BATHROOMS
+
+else if (name === "Bathroom 1") {
+
+    x = 180;
+    y = 640;
+}
+
+else if (name === "Bathroom 2") {
+
+    x = 520;
+    y = 640;
+}
+
+
+// BALCONY
+
+else if (name === "Balcony") {
+
+    x = 1080;
+    y = 360;
 }
 
 
@@ -406,11 +511,11 @@ rect.setAttribute(
     roomHeight
 );
 
-        rect.setAttribute("fill", "#f8f6f2");
+        rect.setAttribute("fill",  "#f8fafc");
 
         rect.setAttribute("stroke", "#111827");
 
-        rect.setAttribute("stroke-width", "2");
+        rect.setAttribute("stroke-width", "2.5");
 
 
         // ROOM NAME
@@ -433,7 +538,7 @@ label.setAttribute(
 
         label.setAttribute(
             "font-size",
-            "12"
+            "22"
         );
 
         label.setAttribute(
@@ -465,7 +570,7 @@ dimensions.setAttribute(
 
         dimensions.setAttribute(
             "font-size",
-            "13"
+            "18"
         );
 
         dimensions.textContent = size;
@@ -474,6 +579,9 @@ dimensions.setAttribute(
         // APPEND
 
         floorplanSvg.appendChild(rect);
+
+        rect.style.filter =
+    "drop-shadow(0px 2px 3px rgba(0,0,0,0.08))";
 
         // ==========================================
 // DOOR SYSTEM
