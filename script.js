@@ -220,8 +220,19 @@ generateBtn.addEventListener("click", () => {
     // ==========================================
 // SMART POSITION TRACKERS
 // ==========================================
+let gridX = 80;
 
-let bedroomY = 60;
+let gridY = 80;
+
+let currentColumn = 0;
+
+let currentRow = 0;
+
+const columnGap = 30;
+
+const rowGap = 30;
+
+const maxColumns = 2;
 
 let hallY = 0;
 
@@ -292,124 +303,92 @@ let roomHeight =
             );
 
 
+// ==========================================
+// AUTO GRID ENGINE
+// ==========================================
 
-// ==========================================
-// BEDROOMS
-// ==========================================
+// ROOM TYPES
 
 if (name.includes("Bedroom")) {
-
-    x = 80;
-
-    y = bedroomY;
 
     roomWidth =
         240 * scaleFactor;
 
     roomHeight =
         140 * scaleFactor;
-
-    bedroomY += roomHeight - 10;
 }
-
-// ==========================================
-// BATHROOMS
-// SHARES RIGHT WALL
-// ==========================================
 
 else if (name.includes("Bathroom")) {
 
-    x = 300;
-
-    y = bedroomY - 110;
-
     roomWidth =
-        110 * scaleFactor;
+        120 * scaleFactor;
 
     roomHeight =
         100 * scaleFactor;
 }
 
-
-// ==========================================
-// HALL
-// CONNECTED BELOW
-// ==========================================
-
 else if (name === "Hall") {
 
-    x = 80;
-
-    y = bedroomY + 10;
-
     roomWidth =
-        380 * scaleFactor;
+        420 * scaleFactor;
 
     roomHeight =
-        170 * scaleFactor;
-
-    hallY = y;
+        180 * scaleFactor;
 }
-
-
-// ==========================================
-// KITCHEN
-// LEFT BOTTOM
-// ==========================================
 
 else if (name === "Kitchen") {
 
-    x = 80;
-
-    y = hallY + roomHeight - 10;
-
     roomWidth =
-        200 * scaleFactor;
+        220 * scaleFactor;
 
     roomHeight =
-        120 * scaleFactor;
-
-    kitchenY = y;
+        130 * scaleFactor;
 }
-
-
-// ==========================================
-// DINING
-// SHARES WALL WITH KITCHEN
-// ==========================================
 
 else if (name === "Dining") {
 
-    x = 290;
-
-
-    y = kitchenY;
-
     roomWidth =
-        200 * scaleFactor;
+        220 * scaleFactor;
 
     roomHeight =
-        120 * scaleFactor;
-}      
-
-
-// ==========================================
-// BALCONY
-// ==========================================
+        130 * scaleFactor;
+}
 
 else if (name === "Balcony") {
 
-    x =
-        470 * scaleFactor;
-
-    y =
-        hallY + 30;
-
     roomWidth =
-        140 * scaleFactor;
+        160 * scaleFactor;
 
     roomHeight =
         110 * scaleFactor;
+}
+
+
+// GRID POSITIONING
+
+x =
+    gridX +
+    currentColumn *
+    (260 * scaleFactor);
+
+y =
+    gridY +
+    currentRow *
+    (170 * scaleFactor);
+
+
+// MOVE GRID
+
+currentColumn++;
+
+
+// NEXT ROW
+
+if (currentColumn >= maxColumns) {
+
+    currentColumn = 0;
+
+    currentRow++;
 }
 
 
