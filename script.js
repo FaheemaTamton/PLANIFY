@@ -63,60 +63,6 @@ generateBtn.addEventListener("click", () => {
 
     floorplanSvg.innerHTML = "";
 
-    // ==========================================
-// OUTER BLUEPRINT BORDER
-// ==========================================
-
-const border =
-    document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "rect"
-    );
-
-border.setAttribute("x", "60");
-
-border.setAttribute("y", "60");
-
-border.setAttribute("width", "1220");
-
-border.setAttribute("height", "980");
-
-border.setAttribute("fill", "none");
-
-border.setAttribute("stroke", "#cbd5e1");
-
-border.setAttribute("stroke-width", "3");
-
-border.setAttribute("stroke-dasharray", "10 8");
-
-floorplanSvg.appendChild(border);
-
-
-// ==========================================
-// BLUEPRINT TITLE
-// ==========================================
-
-const title =
-    document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "text"
-    );
-
-title.setAttribute("x", "90");
-
-title.setAttribute("y", "40");
-
-title.setAttribute("fill", "#1e293b");
-
-title.setAttribute("font-size", "28");
-
-title.setAttribute("font-weight", "700");
-
-title.textContent =
-    "PLANIFY AI — FLOOR PLAN";
-
-floorplanSvg.appendChild(title);
-
 
     // ==========================================
     // CLEAR TABLE
@@ -271,27 +217,6 @@ floorplanSvg.appendChild(title);
     }
 
 
-    // ==========================================
-// SMART POSITION TRACKERS
-// ==========================================
-let gridX = 80;
-
-let gridY = 80;
-
-let currentColumn = 0;
-
-let currentRow = 0;
-
-const columnGap = 30;
-
-const rowGap = 30;
-
-const maxColumns = 2;
-
-let hallY = 0;
-
-let kitchenY = 0;
-
 
     // ==========================================
     // ROOM FUNCTION
@@ -315,16 +240,6 @@ let y = 60;
 // ==========================================
 // DYNAMIC ADAPTIVE SCALING
 // ==========================================
-
-const plotWidth =
-    Number(
-        document.getElementById("plotWidth").value
-    ) || 40;
-
-const plotHeight =
-    Number(
-        document.getElementById("plotHeight").value
-    ) || 60;
 
 
 // SCALE FACTOR
@@ -417,7 +332,6 @@ else if (name === "Balcony") {
         110 * scaleFactor;
 }
 
-
 // ==========================================
 // SMART ROOM POSITIONING
 // ==========================================
@@ -432,14 +346,14 @@ if (name === "Bedroom 1") {
 
 else if (name === "Bedroom 2") {
 
-    x = 520;
-    y = 140;
+    x = 180;
+    y = 360;
 }
 
 else if (name === "Bedroom 3") {
 
     x = 180;
-    y = 360;
+    y = 580;
 }
 
 
@@ -448,7 +362,7 @@ else if (name === "Bedroom 3") {
 else if (name === "Hall") {
 
     x = 180;
-    y = 360;
+    y = 580;
 
     roomWidth = 520;
     roomHeight = 220;
@@ -459,8 +373,8 @@ else if (name === "Hall") {
 
 else if (name === "Kitchen") {
 
-    x = 760;
-    y = 360;
+    x = 180;
+    y = 820;
 }
 
 
@@ -468,8 +382,8 @@ else if (name === "Kitchen") {
 
 else if (name === "Dining") {
 
-    x = 760;
-    y = 560;
+    x = 480;
+    y = 820;
 }
 
 
@@ -477,14 +391,14 @@ else if (name === "Dining") {
 
 else if (name === "Bathroom 1") {
 
-    x = 180;
-    y = 640;
+    x = 520;
+    y = 360;
 }
 
 else if (name === "Bathroom 2") {
 
     x = 520;
-    y = 640;
+    y = 580;
 }
 
 
@@ -492,8 +406,8 @@ else if (name === "Bathroom 2") {
 
 else if (name === "Balcony") {
 
-    x = 1080;
-    y = 360;
+    x = 720;
+    y = 580;
 }
 
 
@@ -511,11 +425,11 @@ rect.setAttribute(
     roomHeight
 );
 
-        rect.setAttribute("fill",  "#f8fafc");
+        rect.setAttribute("fill",  "#f5f5f4");
 
         rect.setAttribute("stroke", "#111827");
 
-        rect.setAttribute("stroke-width", "2.5");
+        rect.setAttribute("stroke-width", "2");
 
 
         // ROOM NAME
@@ -538,7 +452,7 @@ label.setAttribute(
 
         label.setAttribute(
             "font-size",
-            "22"
+            "12"
         );
 
         label.setAttribute(
@@ -570,7 +484,7 @@ dimensions.setAttribute(
 
         dimensions.setAttribute(
             "font-size",
-            "18"
+            "13"
         );
 
         dimensions.textContent = size;
@@ -580,8 +494,7 @@ dimensions.setAttribute(
 
         floorplanSvg.appendChild(rect);
 
-        rect.style.filter =
-    "drop-shadow(0px 2px 3px rgba(0,0,0,0.08))";
+      
 
         // ==========================================
 // DOOR SYSTEM
@@ -1068,3 +981,62 @@ summaryTable.innerHTML += `
         </tr>
     `;
 });
+
+// ==========================================
+// PDF EXPORT
+// ==========================================
+
+const downloadBtn =
+    document.querySelector(".download-btn");
+
+
+downloadBtn.addEventListener(
+    "click",
+    async () => {
+
+        const sheet =
+            document.querySelector(
+                ".architecture-sheet"
+            );
+
+        const canvas =
+            await html2canvas(sheet, {
+
+                scale: 2
+            });
+
+        const imageData =
+            canvas.toDataURL("image/png");
+
+
+        const { jsPDF } = window.jspdf;
+
+        const pdf =
+            new jsPDF(
+                "p",
+                "mm",
+                "a4"
+            );
+
+
+        const pdfWidth =
+            pdf.internal.pageSize.getWidth();
+
+        const pdfHeight =
+            (canvas.height * pdfWidth)
+            / canvas.width;
+
+
+        pdf.addImage(
+            imageData,
+            "PNG",
+            0,
+            0,
+            pdfWidth,
+            pdfHeight
+        );
+
+
+        pdf.save("PlanifyAI-Floorplan.pdf");
+    }
+);
