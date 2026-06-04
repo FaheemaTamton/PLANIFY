@@ -4,6 +4,8 @@ console.log("PLANIFY AI LOADED");
 // ELEMENTS
 // ==========================================
 
+const generateBtn =
+    document.querySelector(".workspace-btn");
 
 const textarea =
     document.querySelector(".prompt-box textarea");
