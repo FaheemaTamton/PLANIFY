@@ -1,26 +1,3 @@
-console.log("PLANIFY AI LOADED");
-
-// ==========================================
-// ELEMENTS
-// ==========================================
-
-const generateBtn =
-    document.querySelector(".workspace-btn");
-
-const textarea =
-    document.querySelector(".prompt-box textarea");
-
-const floorplanSvg =
-    document.querySelector(".floorplan-svg");
-
-const summaryTable =
-    document.querySelector(".summary-table");
-
-const plotWidthInput =
-    document.querySelector("#plotWidth");
-
-const plotHeightInput =
-    document.querySelector("#plotHeight");
 
 
 
